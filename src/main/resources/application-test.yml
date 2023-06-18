@@ -1,0 +1,53 @@
+app:
+  service:
+    user:
+      host: localhost
+      port: 8081
+      url: http://${app.service.user.host}:${app.service.user.port}
+      datasource:
+        host: localhost
+        port: 27017
+        database: projectdb
+        username: root
+        password: root
+spring:
+  security:
+    user:
+      name: admin@gmail.com
+      password: admin
+      roles:
+        - ADMIN
+  datasource:
+    username: ${app.service.datasource.username}
+    password: ${app.service.datasource.password}
+    url: jdbc:mysql//${app.service.user.datasource.host}:${app.service.user.datasource.port}/${app.service.user.datasource.database}
+  #    mongodb:
+  #      uri: mongodb://${app.service.user.datasource.username}:${app.service.user.datasource.password}@${app.service.user.datasource.host}:${app.service.user.datasource.port}/${app.service.user.datasource.database}?authSource=admin&replicaSet=rs0
+  #      auto-index-creation: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+springdoc:
+  use-management-port: true
+  show-actuator: true
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /user-api-ui
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    health:
+      enabled: true
+      show-details: always
+    loggers:
+      enabled: true
+    env:
+      enabled: true
+    web:
+      exposure:
+        include: swaggerui, openapi, beans, metrics, info, health, loggers, readiness

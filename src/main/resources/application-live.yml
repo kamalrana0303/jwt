@@ -1,0 +1,73 @@
+app:
+  service:
+    user:
+      host: localhost
+      port: 8080
+      url: http://${app.service.user.host}:${app.service.user.port}
+      datasource:
+        host: localhost #db
+        port: 3306
+        database: projectdb
+        username: root
+        password: password
+spring:
+  datasource:
+    username: ${app.service.user.datasource.username}
+    password: ${app.service.user.datasource.password}
+    url: jdbc:mysql://${app.service.user.datasource.host}:${app.service.user.datasource.port}/${app.service.user.datasource.database}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          characterEncoding: utf-8
+          CharSet: utf-8
+          useUnicode: true
+          collationConnection: utf8_bin
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ashishrana030393@gmail.com
+    password: wkwdpapsnckibbxu
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+springdoc:
+  use-management-port: true
+  show-actuator: true
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /user-api-ui
+
+management:
+  endpoint:
+    loggers:
+      enabled: true
+  server:
+    port: 9090
+  endpoints:
+    health:
+      enabled: true
+      show-details: always
+    loggers:
+      enabled: true
+    env:
+      enabled: true
+    web:
+      exposure:
+        include: swaggerui, openapi, beans, metrics, info, health, loggers, readiness
